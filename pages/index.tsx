@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { NextPage } from "next";
+import { useFilters } from "../hooks/useFilters";
 
 import styles from "../styles/Home.module.css";
 import { IPost } from "../types/IPost";
@@ -9,14 +10,19 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ posts }) => {
+  const { result } = useFilters(posts, {
+    sort: "ASC",
+    filter: { name: "", value: "" },
+  });
+
   return (
     <div className={styles.container}>
-      {posts.length ? (
+      {result.length ? (
         <ul style={{ padding: 0, listStyle: "none" }}>
-          {posts.map(({ id, title, description }) => (
+          {result.map(({ id, title, description }) => (
             <li key={id}>
               <h2>
-                {id} {title}
+                {id}. {title}
               </h2>
               <p>{description}</p>
             </li>
