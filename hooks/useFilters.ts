@@ -7,9 +7,12 @@ export function useFilters(posts: IPost[], { sort = 'ASC', filter }: IOptions): 
 
   useMemo(() => {
     if (!filter.name || !filter.value) return;
+    if (!resultRef.current[0].hasOwnProperty(filter.name)) return;
 
     resultRef.current = resultRef.current.filter((post) => {
-      return post[filter.name as keyof Omit<IPost, 'id'>].includes(filter.value);
+      const field = post[filter.name as keyof Omit<IPost, 'id' | 'image'>];
+
+      return field.includes(filter.value);
     });
   }, [filter.name, filter.value, resultRef]);
 

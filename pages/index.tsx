@@ -36,10 +36,10 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
 };
 
 export async function getStaticProps() {
-  const posts = await axios.get<IPost[]>(`${process.env.API_HOST}/posts`);
+  const { data } = await axios.get<IPost[]>(`${process.env.API_HOST}/posts`);
 
   return {
-    props: { posts: posts.data }, // will be passed to the page component as props
+    props: { posts: data }, // will be passed to the page component as props
   };
 }
 
