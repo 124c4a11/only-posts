@@ -6,10 +6,12 @@ export function useFilters(posts: IPost[], { sort = 'ASC', filter }: IOptions): 
   const resultRef = useRef<IPost[]>(posts);
 
   useMemo(() => {
-    if (!filter.value) return;
+    if (!filter.name || !filter.value) return;
 
-    resultRef.current = resultRef.current.filter(({ description }) => description.includes(filter.value));
-  }, [filter.value, resultRef]);
+    resultRef.current = resultRef.current.filter((post) => {
+      return post[filter.name as keyof Omit<IPost, 'id'>].includes(filter.value);
+    });
+  }, [filter.name, filter.value, resultRef]);
 
   useMemo(() => {
     if (sort === 'ASC') {

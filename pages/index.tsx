@@ -12,7 +12,7 @@ interface HomeProps {
 const Home: NextPage<HomeProps> = ({ posts }) => {
   const { result } = useFilters(posts, {
     sort: "ASC",
-    filter: { name: "", value: "" },
+    filter: { name: "description", value: "" },
   });
 
   return (
