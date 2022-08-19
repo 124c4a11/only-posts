@@ -17,12 +17,14 @@ export function useFilters(posts: IPost[], { sort = 'ASC', filter }: IOptions): 
   }, [filter.name, filter.value, resultRef]);
 
   useMemo(() => {
-    if (sort === 'ASC') {
-      resultRef.current = [...resultRef.current].sort((a, b) => a.id - b.id);
-    }
+    switch (sort) {
+      case 'ASC':
+        resultRef.current = [...resultRef.current].sort((a, b) => a.id - b.id);
+        break;
 
-    if (sort === 'DESC') {
-      resultRef.current = [...resultRef.current].sort((a, b) => b.id - a.id);
+      case 'DESC':
+        resultRef.current = [...resultRef.current].sort((a, b) => b.id - a.id);
+        break;
     }
   }, [sort, resultRef]);
 
